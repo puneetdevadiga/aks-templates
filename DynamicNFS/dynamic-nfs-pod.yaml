@@ -1,5 +1,3 @@
-kubectl apply -f
-
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:

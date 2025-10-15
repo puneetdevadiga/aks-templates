@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: azurefile
+spec:
+  capacity:
+    storage: 50Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: azurefile-csi
+  csi:
+    driver: file.csi.azure.com
+    volumeHandle: "rg-aks-nfs-demo#saaksnfsdemo#aks-with-private-nfs"  # make sure this volumeid is unique for every identical share in the cluster
+    volumeAttributes:
+      resourceGroup: rg-aks-nfs-demo
+      storageAccount: saaksnfsdemo
+      shareName: aks-with-private-nfs
+      protocol: nfs
+  mountOptions:
+    - nconnect=4  # improves performance by enabling multiple connections to share

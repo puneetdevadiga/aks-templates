@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nfs-nfsclient-test
+  labels:
+    app: nfs-sample
+spec:
+  containers:
+    - name: busybox
+      image: busybox:1.36
+      imagePullPolicy: IfNotPresent
+      command:
+        - sh
+        - -c
+        - |
+          echo "Writing timestamps to /mnt/out.txt";
+          while true; do date >> /mnt/out.txt; sleep 5; done
+      volumeMounts:
+        - name: nfsvol
+          mountPath: /mnt
+  volumes:
+    - name: nfsvol
+      persistentVolumeClaim:
+        claimName: azurefile
