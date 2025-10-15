@@ -120,17 +120,12 @@ kubectl exec -it statefulset-azurefile-0 -- tail -f /mnt/azurefile/outfile
 You should see timestamps appended every second.
 
 
-## 7. Cleanup
+## 5. Cleanup
 ```bash
 kubectl delete statefulset statefulset-azurefile
 kubectl delete storageclass azurefile-csi-nfs
 ```
 Note: Deleting the StatefulSet removes the PVCs (depending on reclaim policy). Ensure data retention strategy if needed.
-
-## 8. Notes
-- Do **not** specify `vers`, `minorversion`, or `sec` in `mountOptions`; they are managed by CSI.
-- Premium NFS minimum share size is 100 GiB, so requesting smaller sizes will auto-expand or fail.
-- For production, consider tagging resources and monitoring latency (Azure Monitor + metrics for storage account).
 
 ---
 End of Dynamic NFS README.
